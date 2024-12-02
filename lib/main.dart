@@ -69,6 +69,7 @@ class ThingsboardApp extends StatelessWidget {
     return WlThemeWidget(
       getIt<ThingsboardAppRouter>().tbContext,
       wlThemedWidgetBuilder: (context, data, wlParams) => MaterialApp(
+        debugShowCheckedModeBanner: false,
         scaffoldMessengerKey:
             getIt<ThingsboardAppRouter>().tbContext.messengerKey,
         localizationsDelegates: const [

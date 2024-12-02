@@ -112,6 +112,7 @@ abstract class Utils {
           parts[parts.length - 1] = key;
           var encodedUrl = parts.join('/');
           imageLink =
+          imageLink =
               getIt<IEndpointService>().getCachedEndpoint() + encodedUrl;
           headers = {_authHeaderName: _authScheme + jwtToken};
         }
