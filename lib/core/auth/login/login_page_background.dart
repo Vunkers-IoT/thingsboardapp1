@@ -7,8 +7,8 @@ class LoginPageBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox.expand(
       child: CustomPaint(
-        painter:
-            _LoginPageBackgroundPainter(color: Theme.of(context).primaryColor),
+        painter: 
+        _LoginPageBackgroundPainter(color: Color(0xFF311B92)),
       ),
     );
   }
