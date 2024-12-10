@@ -130,7 +130,7 @@ void main() {
             () => tbContext.reInit(
               endpoint: any(named: 'endpoint'),
               onDone: any(named: 'onDone'),
-              onError: any(named: 'onError'),
+              onError: any(named: 'onError'), onAuthError: (ThingsboardError error) {  },
             ),
           ).thenAnswer(
             (invocation) {
@@ -209,7 +209,7 @@ void main() {
             () => tbContext.reInit(
               endpoint: any(named: 'endpoint'),
               onDone: any(named: 'onDone'),
-              onError: any(named: 'onError'),
+              onError: any(named: 'onError'), onAuthError: (ThingsboardError error) {  },
             ),
           ).thenAnswer(
             (invocation) {

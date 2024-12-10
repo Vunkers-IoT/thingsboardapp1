@@ -165,7 +165,7 @@ class TbContext implements PopEntry {
   Future<void> reInit({
     required String endpoint,
     required VoidCallback onDone,
-    required ErrorCallback onAuthError,
+    required ErrorCallback onAuthError, required onError,
   }) async {
     log.debug('TbContext:reinit()');
 
