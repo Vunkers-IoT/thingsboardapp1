@@ -135,7 +135,7 @@ class TbContext implements PopEntry {
         log.error('Failed to get initial uri: $e', e);
       }
       await tbClient.init();
-      if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS) {
+      if (!kIsWeb && UniversalPlatform.isAndroid || UniversalPlatform.isIOS) {
         uriLinkStream.listen(
           (Uri? uri) {
             _updateInitialNavigation(uri);
