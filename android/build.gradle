@@ -1,18 +1,20 @@
-
-buildscript {
-    ext.kotlin_version = '1.7.10'
-
+allprojects {
     repositories {
         google()
         mavenCentral()
     }
+}
 
-    dependencies {
-        classpath 'com.google.gms:google-services:4.4.0'
-        classpath 'com.android.tools.build:gradle:7.4.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'io.flutter:flutter-gradle-plugin'
-    }
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
 }
 
 
@@ -26,26 +28,4 @@ android {
         versionCode 1
         versionName "1.0"
     }
-}
-
-pulgins{
-    id 'com.android.application' version '7.4.1' apply false
-    id "kotlin-android" apply false
-    id 'io.flutter.flutter-gradle-plugin' apply false
-    id 'com.google.gms.google-services'
-}
-
-
-rootProject.buildDir = '../build'
-
-subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
-}
-
-subprojects {
-    project.evaluationDependsOn(':app')
-}
-
-tasks.register("clean", Delete) {
-    delete rootProject.buildDir
 }

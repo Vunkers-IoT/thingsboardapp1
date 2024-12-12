@@ -20,12 +20,19 @@ import 'package:thingsboard_app/utils/services/firebase/i_firebase_service.dart'
 import 'package:thingsboard_app/utils/services/local_database/i_local_database_service.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:universal_platform/universal_platform.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Lógica condicional basada en la plataforma
+  if (kIsWeb) {
+    print('Aplicación ejecutándose en la web');
+  } else {
+    print('Aplicación ejecutándose en una plataforma móvil o de escritorio');
+  }
+
+  // Inicializa Firebase
   await Firebase.initializeApp(
-   options: DefaultFirebaseOptions.currentPlatform,
-  
+    options: DefaultFirebaseOptions.currentPlatform,
   );
 
   await setUpRootDependencies();
