@@ -1,31 +1,18 @@
 allprojects {
     repositories {
         google()
-        mavenCentral()
+        jcenter()
     }
 }
 
-rootProject.buildDir = "../build"
+rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 subprojects {
-    project.evaluationDependsOn(":app")
+    project.evaluationDependsOn(':app')
 }
 
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
-}
-
-
-android {
-    compileSdkVersion 33
-
-    defaultConfig {
-        applicationId "org.thingsboard.pe.app"
-        minSdkVersion 21
-        targetSdkVersion 33
-        versionCode 1
-        versionName "1.0"
-    }
 }
