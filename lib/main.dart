@@ -7,35 +7,30 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/messages.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
+import 'package:firebase_core/firebase_core.dart';
 import 'package:thingsboard_app/app_bloc_observer.dart';
 import 'package:thingsboard_app/config/routes/router.dart';
 import 'package:thingsboard_app/config/themes/tb_theme.dart';
 import 'package:thingsboard_app/config/themes/wl_theme_widget.dart';
-
 import 'package:thingsboard_app/firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:thingsboard_app/locator.dart';
 import 'package:thingsboard_app/utils/services/firebase/i_firebase_service.dart';
 import 'package:thingsboard_app/utils/services/local_database/i_local_database_service.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Lógica condicional basada en la plataforma
-  if (kIsWeb) {
-    print('Aplicación ejecutándose en la web');
-  } else {
-    print('Aplicación ejecutándose en una plataforma móvil o de escritorio');
-  }
-
-  // Inicializa Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  await Hive.initFlutter();
+
   await setUpRootDependencies();
+
   if (UniversalPlatform.isAndroid) {
     await InAppWebViewController.setWebContentsDebuggingEnabled(true);
   }

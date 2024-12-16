@@ -5,10 +5,10 @@ class LoginPageBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.expand(
+    return const SizedBox.expand(
       child: CustomPaint(
         painter: 
-        _LoginPageBackgroundPainter(color: Color(0xFF311B92)),
+        _LoginPageBackgroundPainter(color: Color.fromARGB(255, 148, 15, 108)),
       ),
     );
   }
