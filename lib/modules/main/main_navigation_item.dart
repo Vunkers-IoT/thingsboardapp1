@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/messages.dart';
 import 'package:thingsboard_app/core/context/tb_context.dart';
 import 'package:thingsboard_app/modules/alarm/presentation/view/alarms_page.dart';
-import 'package:thingsboard_app/modules/device/devices_list_page.dart';
-import 'package:thingsboard_app/modules/device/devices_main_page.dart';
 import 'package:thingsboard_app/modules/home/home_page.dart';
 import 'package:thingsboard_app/modules/more/more_page.dart';
 import 'package:thingsboard_app/thingsboard_client.dart';
@@ -23,8 +21,8 @@ class TbMainNavigationItem {
 
   static const mainPageStateMap = <Authority, Set<String>>{
     Authority.SYS_ADMIN: {'/home', '/more'},
-    Authority.TENANT_ADMIN: {'/home', '/alarms', '/devices', '/more'},
-    Authority.CUSTOMER_USER: {'/home', '/alarms', '/devices', '/more'},
+    Authority.TENANT_ADMIN: {'/home', '/alarms', '/more'},
+    Authority.CUSTOMER_USER: {'/home', '/alarms', '/more'},
   };
 
   static bool isMainPageState(TbContext tbContext, String path) {
@@ -59,12 +57,7 @@ class TbMainNavigationItem {
                 icon: Icons.notifications_outlined,
                 path: '/alarms',
               ),
-              TbMainNavigationItem(
-                page: DevicesMainPage(tbContext),
-                title: 'Devices',
-                icon: Icons.devices_outlined,
-                path: '/devices',
-              ),
+              
             ],
           );
           break;
@@ -77,12 +70,7 @@ class TbMainNavigationItem {
                 icon: Icons.notifications_outlined,
                 path: '/alarms',
               ),
-              TbMainNavigationItem(
-                page: DevicesListPage(tbContext),
-                title: 'Devices',
-                icon: Icons.devices_outlined,
-                path: '/devices',
-              ),
+             
             ],
           );
           break;
@@ -120,9 +108,7 @@ class TbMainNavigationItem {
         case '/alarms':
           item.title = S.of(context).alarms;
           break;
-        case '/devices':
-          item.title = S.of(context).devices;
-          break;
+
         case '/more':
           item.title = S.of(context).more;
           break;

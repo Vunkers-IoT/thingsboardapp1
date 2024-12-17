@@ -5,11 +5,12 @@ class LoginPageBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox.expand(
-      child: CustomPaint(
-        painter: 
-        _LoginPageBackgroundPainter(color: Color.fromARGB(255, 148, 15, 108)),
-      ),
+    return Container(
+      color: const Color.fromARGB(255, 240, 236, 236),
+      child: const SizedBox.expand(
+          child: CustomPaint(
+        painter: _LoginPageBackgroundPainter(color: Color.fromRGBO(103, 58, 183, 1)),
+      )),
     );
   }
 }
@@ -21,7 +22,7 @@ class _LoginPageBackgroundPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = color.withAlpha(14);
+    final paint = Paint()..color = color.withAlpha(150);
     paint.style = PaintingStyle.fill;
     var topPath = Path();
     topPath.moveTo(0, 0);

@@ -88,10 +88,11 @@ class _LoginPageState extends TbPageState<LoginPage>
                             children: [
                               tbContext.wlService.loginLogoImage != null
                                   ? SizedBox(
-                                      height: 29,
+                                      height: 45,
                                       width: 133,
-                                      child:
-                                          tbContext.wlService.loginLogoImage!,
+                                      child:Image.asset(
+                                        'assets/images/vunkers_logo retallat_250.png')
+                                          
                                     )
                                   : const SizedBox(height: 25),
                               Visibility(
@@ -348,6 +349,7 @@ class _LoginPageState extends TbPageState<LoginPage>
                               padding: const EdgeInsets.symmetric(
                                 vertical: 16,
                               ),
+                              backgroundColor: Color.fromRGBO(29, 233, 182, 0.92),
                             ),
                             onPressed: () {
                               _login();
