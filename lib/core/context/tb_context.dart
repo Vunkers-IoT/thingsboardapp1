@@ -51,6 +51,8 @@ class TbContext implements PopEntry {
   @override
   final ValueNotifier<bool> canPopNotifier = ValueNotifier<bool>(false);
 
+  
+
   @override
   void onPopInvoked(bool didPop) {
     onPopInvokedImpl(didPop);
@@ -165,7 +167,8 @@ class TbContext implements PopEntry {
   Future<void> reInit({
     required String endpoint,
     required VoidCallback onDone,
-    required ErrorCallback onAuthError, required onError,
+    required ErrorCallback onAuthError,
+    required onError,
   }) async {
     log.debug('TbContext:reinit()');
 
@@ -279,7 +282,7 @@ class TbContext implements PopEntry {
     _isLoadingNotifier.value = false;
   }
 
-  Future<void> onUserLoaded({VoidCallback? onDone}) async {
+   Future<void> onUserLoaded({VoidCallback? onDone}) async {
     try {
       log.debug(
         'TbContext.onUserLoaded: isAuthenticated=${tbClient.isAuthenticated()}',
@@ -393,7 +396,6 @@ class TbContext implements PopEntry {
       );
     }
   }
-
   Future<void> navigateByAppLink(String? link) async {
     if (link != null) {
       final uri = Uri.parse(link);
@@ -437,6 +439,8 @@ class TbContext implements PopEntry {
 
   bool get hasSelfRegistration =>
       signUpParams != null && signUpParams!.captchaSiteKey != null;
+
+  get getHomeDashboard => null;
 
   bool hasGenericPermission(Resource resource, Operation operation) {
     if (userPermissions != null) {
@@ -485,13 +489,7 @@ class TbContext implements PopEntry {
               );
 
               navigateToDashboard(defaultDashboardId, animate: false);
-            } else {
-              navigateTo(
-                '/fullscreenDashboard/$defaultDashboardId',
-                replace: true,
-                transition: TransitionType.fadeIn,
-              );
-            }
+            } 
           } else {
             navigateTo(
               '/home',
@@ -511,6 +509,15 @@ class TbContext implements PopEntry {
         }
       }
     }
+  }
+
+  String? _getDashboardIdByName(String name) {
+    return homeDashboard?.dashboardId
+        ?.firstWhere(
+          (dashboard) => dashboard.name == name,
+          orElse: () => null,
+        )
+        ?.id;
   }
 
   String? _defaultDashboardId() {
@@ -707,6 +714,17 @@ class TbContext implements PopEntry {
       ),
     );
   }
+
+  getDefaultDashboardId() {}
+}
+
+extension on AttributeService {
+  getUserAttributes() {}
+}
+
+extension on DashboardId? {
+  firstWhere(bool Function(dynamic dashboard) param0,
+      {required Null Function() orElse}) {}
 }
 
 mixin HasTbContext {

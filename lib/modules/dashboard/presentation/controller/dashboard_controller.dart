@@ -118,4 +118,6 @@ class DashboardController {
     hasRightLayout.dispose();
     rightLayoutOpened.dispose();
   }
+
+  navigateToDashboard(String defaultDashboardId, {required bool animate}) {}
 }
