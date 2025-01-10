@@ -23,16 +23,10 @@ class _HomePageState extends TbContextState<HomePage>
     return true;
   }
 
- @override
+  @override
   void initState() {
     super.initState();
-    // Navegar directamente al panel predeterminado del cliente después de que el widget se haya inicializado
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final defaultDashboardId = await tbContext.getDefaultDashboardId();
-      if (defaultDashboardId != null) {
-        tbContext.navigateToDashboard(defaultDashboardId);
-      }
-    });
+
   }
 
   @override
