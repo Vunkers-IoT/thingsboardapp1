@@ -23,6 +23,7 @@ def flutterVersionName = localProperties.getProperty('flutter.versionName', '1.0
 android {
     compileSdkVersion 34
 
+
     defaultConfig {
         applicationId "org.vunkers.thingsboard.app"
         minSdkVersion 21
