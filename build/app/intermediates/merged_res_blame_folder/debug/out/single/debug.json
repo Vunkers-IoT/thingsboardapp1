@@ -1,0 +1,74 @@
+[
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/mipmap-mdpi_thingsboard.png.flat",
+        "source": "org.thingsboard.pe.app-main-36:/mipmap-mdpi/thingsboard.png"
+    },
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/mipmap-xxhdpi_launcher_icon.png.flat",
+        "source": "org.thingsboard.pe.app-main-36:/mipmap-xxhdpi/launcher_icon.png"
+    },
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "org.thingsboard.pe.app-main-36:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/mipmap-xxhdpi_thingsboard.png.flat",
+        "source": "org.thingsboard.pe.app-main-36:/mipmap-xxhdpi/thingsboard.png"
+    },
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/mipmap-xhdpi_thingsboard.png.flat",
+        "source": "org.thingsboard.pe.app-main-36:/mipmap-xhdpi/thingsboard.png"
+    },
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "org.thingsboard.pe.app-main-36:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/xml_network_security_config.xml.flat",
+        "source": "org.thingsboard.pe.app-main-36:/xml/network_security_config.xml"
+    },
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/mipmap-hdpi_thingsboard.png.flat",
+        "source": "org.thingsboard.pe.app-main-36:/mipmap-hdpi/thingsboard.png"
+    },
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "org.thingsboard.pe.app-main-36:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/drawable-v21_launch_background.xml.flat",
+        "source": "org.thingsboard.pe.app-main-36:/drawable-v21/launch_background.xml"
+    },
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "org.thingsboard.pe.app-main-36:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/mipmap-xxxhdpi_thingsboard.png.flat",
+        "source": "org.thingsboard.pe.app-main-36:/mipmap-xxxhdpi/thingsboard.png"
+    },
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "org.thingsboard.pe.app-main-36:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/mipmap-mdpi_launcher_icon.png.flat",
+        "source": "org.thingsboard.pe.app-main-36:/mipmap-mdpi/launcher_icon.png"
+    },
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/mipmap-hdpi_launcher_icon.png.flat",
+        "source": "org.thingsboard.pe.app-main-36:/mipmap-hdpi/launcher_icon.png"
+    },
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/xml_provider_paths.xml.flat",
+        "source": "org.thingsboard.pe.app-main-36:/xml/provider_paths.xml"
+    },
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/mipmap-xhdpi_launcher_icon.png.flat",
+        "source": "org.thingsboard.pe.app-main-36:/mipmap-xhdpi/launcher_icon.png"
+    },
+    {
+        "merged": "org.thingsboard.pe.app-merged_res-42:/mipmap-xxxhdpi_launcher_icon.png.flat",
+        "source": "org.thingsboard.pe.app-main-36:/mipmap-xxxhdpi/launcher_icon.png"
+    }
+]

@@ -1,0 +1,1 @@
+ C:\\Users\\jbanlles\\Desktop\\flutter_thingsboard_pe_app\\.dart_tool\\flutter_build\\0b160925792db273f857a0a85acfb0f1\\native_assets.yaml: 

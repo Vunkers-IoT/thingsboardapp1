@@ -1,0 +1,1 @@
+ C:\\Users\\jbanlles\\Documents\\GitHub\\thingsboardapp1\\.dart_tool\\flutter_build\\8352181f14354a05c7998d1fbca04e51\\native_assets.yaml: 
