@@ -13,12 +13,12 @@ import 'package:thingsboard_app/utils/utils.dart';
 
 
 class NotificationService {
-  static final NotificationService _instance = NotificationService._();
+  static NotificationService? _instance;
   static FirebaseMessaging _messaging = FirebaseMessaging.instance;
   late NotificationDetails _notificationDetails;
-  late TbLogger _log;
-  late ThingsboardClient _tbClient;
-  late TbContext _tbContext;
+  final TbLogger _log;
+  final ThingsboardClient _tbClient;
+  final TbContext _tbContext;
   final INotificationsLocalService _localService = NotificationsLocalService();
   StreamSubscription? _foregroundMessageSubscription;
   StreamSubscription? _onMessageOpenedAppSubscription;
@@ -29,19 +29,17 @@ class NotificationService {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  NotificationService._();
+  NotificationService._(this._tbClient, this._log, this._tbContext);
 
-  factory NotificationService() => _instance;
-
-  Future<void> init(
+  factory NotificationService(
     ThingsboardClient tbClient,
     TbLogger log,
     TbContext context,
-  ) async {
-    _log = log;
-    _tbClient = tbClient;
-    _tbContext = context;
+  ) {
+    return _instance ??= NotificationService._(tbClient, log, context);
+  }
 
+  Future<void> init() async {
     _log.debug('NotificationService::init()');
 
     final message = await FirebaseMessaging.instance.getInitialMessage();
@@ -98,8 +96,12 @@ class NotificationService {
   }
 
   Future<String?> getToken() async {
-    _fcmToken = await _messaging.getToken();
-    return _fcmToken;
+    try {
+      _fcmToken = await _messaging.getToken();
+      return _fcmToken;
+    } catch (_) {
+      return null;
+    }
   }
 
   Future<RemoteMessage?> initialMessage() async {
@@ -256,8 +258,9 @@ class NotificationService {
 
   static void handleClickOnNotification(
     Map<String, dynamic> data,
-    TbContext tbContext,
-  ) {
+    TbContext tbContext, {
+    bool isOnNotificationsScreenAlready = false,
+  }) {
     if (data['enabled'] == true || data['onClick.enabled'] == 'true') {
       switch (data['linkType'] ?? data['onClick.linkType']) {
         case 'DASHBOARD':
@@ -291,6 +294,9 @@ class NotificationService {
           if (link != null) {
             if (Uri.parse(link).isAbsolute) {
               tbContext.navigateTo('/url/${Uri.encodeComponent(link)}');
+            } else if (link == '/notifications' &&
+                !isOnNotificationsScreenAlready) {
+              tbContext.navigateTo(link);
             } else {
               tbContext.navigateTo(link);
             }
@@ -299,7 +305,9 @@ class NotificationService {
           break;
       }
     } else {
-      tbContext.navigateTo('/notifications', replace: true);
+      if (!isOnNotificationsScreenAlready) {
+        tbContext.navigateTo('/notifications');
+      }
     }
   }
 

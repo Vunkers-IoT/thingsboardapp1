@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:thingsboard_app/constants/app_constants.dart';
 import 'package:thingsboard_app/core/auth/noauth/di/noauth_di.dart';
 import 'package:thingsboard_app/core/auth/noauth/presentation/bloc/bloc.dart';
 import 'package:thingsboard_app/core/context/tb_context.dart';
@@ -26,8 +27,30 @@ void main() {
 
     when(() => tbContext.tbClient).thenReturn(tbClient);
     when(() => firebaseService.removeApp()).thenAnswer((_) => Future.value());
+    when(() => firebaseService.removeApp(name: any(named: 'name')))
+        .thenAnswer((_) => Future.value());
     when(() => endpointService.setEndpoint(any())).thenAnswer(
       (_) => Future.value(),
+    );
+    when(() => endpointService.getEndpoint()).thenAnswer(
+      (_) => Future.value(ThingsboardAppConstants.thingsBoardApiEndpoint),
+    );
+
+    when(() => tbClient.getAuthUserFromJwt(any())).thenReturn(
+      AuthUser.fromJson(
+        {
+          'userId': '1',
+          'scopes': ['TENANT_ADMIN'],
+          'sub': '',
+          'tenantId': '1',
+          'additionalData': {},
+        },
+      ),
+    );
+
+    when(() => tbContext.isAuthenticated).thenReturn(true);
+    when(() => endpointService.isCustomEndpoint()).thenAnswer(
+      (_) => Future.value(true),
     );
 
     getIt.registerLazySingleton(() => TbLogger());
@@ -130,12 +153,16 @@ void main() {
             () => tbContext.reInit(
               endpoint: any(named: 'endpoint'),
               onDone: any(named: 'onDone'),
+<<<<<<< HEAD:test/core/noauth/switch_endpoint_test.dart
               onError: any(named: 'onError'), onAuthError: (ThingsboardError error) {  },
+=======
+              onAuthError: any(named: 'onAuthError'),
+>>>>>>> repo-origen/release/1.5.0:test/ core/noauth/switch_endpoint_test.dart
             ),
           ).thenAnswer(
             (invocation) {
               final onError =
-                  invocation.namedArguments[const Symbol('onError')];
+                  invocation.namedArguments[const Symbol('onAuthError')];
               onError(
                 ThingsboardError(message: 'TBClient re-init error message'),
               );
@@ -209,7 +236,11 @@ void main() {
             () => tbContext.reInit(
               endpoint: any(named: 'endpoint'),
               onDone: any(named: 'onDone'),
+<<<<<<< HEAD:test/core/noauth/switch_endpoint_test.dart
               onError: any(named: 'onError'), onAuthError: (ThingsboardError error) {  },
+=======
+              onAuthError: any(named: 'onAuthError'),
+>>>>>>> repo-origen/release/1.5.0:test/ core/noauth/switch_endpoint_test.dart
             ),
           ).thenAnswer(
             (invocation) {
