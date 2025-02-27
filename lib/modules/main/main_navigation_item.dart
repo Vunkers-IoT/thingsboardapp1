@@ -1,49 +1,56 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:flutter_gen/gen_l10n/messages.dart';
 import 'package:thingsboard_app/core/context/tb_context.dart';
 import 'package:thingsboard_app/modules/alarm/presentation/view/alarms_page.dart';
 import 'package:thingsboard_app/modules/home/home_page.dart';
 import 'package:thingsboard_app/modules/more/more_page.dart';
 import 'package:thingsboard_app/thingsboard_client.dart';
+=======
+>>>>>>> repo-origen/release/1.5.0
 
-class TbMainNavigationItem {
-  final Widget page;
-  String title;
-  final IconData icon;
-  final String path;
-
-  TbMainNavigationItem({
+class TbMainNavigationItem extends Equatable {
+  const TbMainNavigationItem({
     required this.page,
     required this.title,
     required this.icon,
     required this.path,
+    this.id,
+    this.showAdditionalIcon = false,
+    this.additionalIconSmall,
+    this.additionalIconLarge,
   });
 
+<<<<<<< HEAD
   static const mainPageStateMap = <Authority, Set<String>>{
     Authority.SYS_ADMIN: {'/home', '/more'},
     Authority.TENANT_ADMIN: {'/home', '/alarms', '/more'},
     Authority.CUSTOMER_USER: {'/home', '/alarms', '/more'},
   };
+=======
+  final Widget page;
+  final String title;
+  final IconData icon;
+  final String path;
+  final String? id;
+  final bool showAdditionalIcon;
+  final Widget? additionalIconSmall;
+  final Widget? additionalIconLarge;
+>>>>>>> repo-origen/release/1.5.0
 
-  static bool isMainPageState(TbContext tbContext, String path) {
-    if (tbContext.isAuthenticated) {
-      return mainPageStateMap[tbContext.tbClient.getAuthUser()!.authority]!
-          .contains(path);
-    } else {
-      return false;
-    }
-  }
-
-  static List<TbMainNavigationItem> getItems(TbContext tbContext) {
-    if (tbContext.isAuthenticated) {
-      final items = [
-        TbMainNavigationItem(
-          page: HomePage(tbContext),
-          title: 'Home',
-          icon: Icons.home_outlined,
-          path: '/home',
-        ),
+  @override
+  List<Object?> get props => [
+        page,
+        title,
+        icon,
+        path,
+        id,
+        showAdditionalIcon,
+        additionalIconSmall,
+        additionalIconLarge,
       ];
+<<<<<<< HEAD
 
       switch (tbContext.tbClient.getAuthUser()!.authority) {
         case Authority.SYS_ADMIN:
@@ -115,4 +122,6 @@ class TbMainNavigationItem {
       }
     }
   }
+=======
+>>>>>>> repo-origen/release/1.5.0
 }
