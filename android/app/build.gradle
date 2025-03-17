@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+
     id 'dev.flutter.flutter-gradle-plugin'
 }
 
@@ -21,7 +22,7 @@ def flutterVersionCode = localProperties.getProperty('flutter.versionCode', '7')
 def flutterVersionName = localProperties.getProperty('flutter.versionName', '7.0.0')
 
 android {
-    compileSdkVersion 34
+    compileSdkVersion flutter.compileSdkVersion.toInteger()
 
 
     defaultConfig {

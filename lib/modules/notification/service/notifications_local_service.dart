@@ -1,11 +1,6 @@
 import 'dart:async';
-<<<<<<< HEAD
 import 'package:flutter/foundation.dart'; // Importa esta librería para kIsWeb
 import 'package:flutter_app_badger/flutter_app_badger.dart';
-=======
-
-import 'package:flutter_new_badger/flutter_new_badger.dart';
->>>>>>> repo-origen/release/1.5.0
 import 'package:thingsboard_app/locator.dart';
 import 'package:thingsboard_app/modules/notification/service/i_notifications_local_service.dart';
 import 'package:thingsboard_app/thingsboard_client.dart';
@@ -24,14 +19,10 @@ final class NotificationsLocalService implements INotificationsLocalService {
     final updatedCounter = int.parse(counter ?? '0') + 1;
     await storage.setItem(notificationCounterKey, updatedCounter.toString());
 
-<<<<<<< HEAD
     if (!kIsWeb) {
-      // Solo actualiza el badge si no es la web
       FlutterAppBadger.updateBadgeCount(updatedCounter);
     }
-=======
-    FlutterNewBadger.setBadge(updatedCounter);
->>>>>>> repo-origen/release/1.5.0
+    
     notificationsNumberStream.add(updatedCounter);
   }
 
@@ -40,23 +31,14 @@ final class NotificationsLocalService implements INotificationsLocalService {
     final counter = await storage.getItem(notificationCounterKey);
     final updatedCounter = int.parse(counter ?? '0') - 1;
     if (updatedCounter <= 0) {
-<<<<<<< HEAD
       if (!kIsWeb) {
-        // Elimina el badge solo si no es la web
         FlutterAppBadger.removeBadge();
       }
       notificationsNumberStream.add(0);
     } else {
       if (!kIsWeb) {
-        // Solo actualiza el badge si no es la web
         FlutterAppBadger.updateBadgeCount(updatedCounter);
       }
-=======
-      FlutterNewBadger.removeBadge();
-      notificationsNumberStream.add(0);
-    } else {
-      FlutterNewBadger.setBadge(updatedCounter);
->>>>>>> repo-origen/release/1.5.0
       await storage.setItem(notificationCounterKey, updatedCounter.toString());
       notificationsNumberStream.add(updatedCounter);
     }
@@ -70,26 +52,18 @@ final class NotificationsLocalService implements INotificationsLocalService {
 
   @override
   Future<void> clearNotificationBadgeCount() async {
-<<<<<<< HEAD
     if (!kIsWeb) {
       FlutterAppBadger.removeBadge();
     }
-=======
-    FlutterNewBadger.removeBadge();
->>>>>>> repo-origen/release/1.5.0
     storage.deleteItem(notificationCounterKey);
     notificationsNumberStream.add(0);
   }
 
   @override
   Future<void> updateNotificationsCount(int count) async {
-<<<<<<< HEAD
     if (!kIsWeb) {
       FlutterAppBadger.updateBadgeCount(count);
     }
-=======
-    FlutterNewBadger.setBadge(count);
->>>>>>> repo-origen/release/1.5.0
     storage.setItem(notificationCounterKey, count.toString());
     notificationsNumberStream.add(count);
   }

@@ -239,6 +239,12 @@ abstract class S {
   /// **'Password reset link was successfully sent!'**
   String get passwordResetLinkSuccessfullySentNotification;
 
+  /// No description provided for @emailVersificationSuccessfullySentNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Email verification link was successfully sent!'**
+  String get emailVersificationSuccessfullySentNotification;
+
   /// No description provided for @or.
   ///
   /// In en, this message translates to:
@@ -1084,6 +1090,42 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Frankfurt'**
   String get europeRegionShort;
+
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// No description provided for @deviceList.
+  ///
+  /// In en, this message translates to:
+  /// **'Device list'**
+  String get deviceList;
+
+  /// No description provided for @dashboards.
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboards'**
+  String get dashboards;
+
+  /// No description provided for @isRequiredText.
+  ///
+  /// In en, this message translates to:
+  /// **'is required.'**
+  String get isRequiredText;
+
+  /// No description provided for @updateRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Update required'**
+  String get updateRequired;
+
+  /// No description provided for @updateTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Update to {version}'**
+  String updateTo(Object version);
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

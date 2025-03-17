@@ -47,13 +47,8 @@ class PaginationGridWidget<T, B> extends StatelessWidget {
                   ),
             ),
           ),
-<<<<<<< HEAD
-        ),
-      ],
-=======
         ],
       ),
->>>>>>> repo-origen/release/1.5.0
     );
   }
 

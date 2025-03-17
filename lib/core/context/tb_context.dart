@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:app_links/app_links.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
@@ -25,6 +24,8 @@ import 'package:thingsboard_app/utils/services/widget_action_handler.dart';
 import 'package:thingsboard_app/utils/services/wl_service.dart';
 import 'package:universal_platform/universal_platform.dart';
 
+import 'package:app_links/app_links.dart';
+
 part 'has_tb_context.dart';
 
 enum NotificationType { info, warn, success, error }
@@ -34,7 +35,7 @@ class TbContext implements PopEntry {
     _widgetActionHandler = WidgetActionHandler(this);
     wlService = WlService(this);
   }
-
+  
   static final deviceInfoPlugin = DeviceInfoPlugin();
   bool isUserLoaded = false;
   final _isAuthenticated = ValueNotifier<bool>(false);
@@ -141,13 +142,10 @@ class TbContext implements PopEntry {
         log.error('Failed to get initial uri: $e', e);
       }
       await tbClient.init();
-<<<<<<< HEAD
-      if (!kIsWeb && UniversalPlatform.isAndroid || UniversalPlatform.isIOS) {
-        uriLinkStream.listen(
-=======
+
       if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS) {
         appLinks.uriLinkStream.listen(
->>>>>>> repo-origen/release/1.5.0
+
           (Uri? uri) {
             _updateInitialNavigation(uri);
             handleInitialNavigation();
@@ -473,14 +471,7 @@ class TbContext implements PopEntry {
         e.message == 'Unable to connect';
   }
 
-<<<<<<< HEAD
-  bool get hasSelfRegistration =>
-      signUpParams != null && signUpParams!.captchaSiteKey != null;
 
-  get getHomeDashboard => null;
-
-=======
->>>>>>> repo-origen/release/1.5.0
   bool hasGenericPermission(Resource resource, Operation operation) {
     if (userPermissions != null) {
       return userPermissions!.hasGenericPermission(resource, operation);

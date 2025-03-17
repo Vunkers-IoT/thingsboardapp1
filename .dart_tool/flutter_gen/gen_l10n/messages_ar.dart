@@ -78,6 +78,9 @@ class SAr extends S {
   String get passwordResetLinkSuccessfullySentNotification => 'تم إرسال رابط إعادة تعيين كلمة المرور بنجاح!';
 
   @override
+  String get emailVersificationSuccessfullySentNotification => 'Email verification link was successfully sent!';
+
+  @override
   String get or => 'OR';
 
   @override
@@ -513,4 +516,24 @@ class SAr extends S {
 
   @override
   String get europeRegionShort => 'Frankfurt';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get deviceList => 'Device list';
+
+  @override
+  String get dashboards => 'Dashboards';
+
+  @override
+  String get isRequiredText => 'is required.';
+
+  @override
+  String get updateRequired => 'Update required';
+
+  @override
+  String updateTo(Object version) {
+    return 'Update to $version';
+  }
 }

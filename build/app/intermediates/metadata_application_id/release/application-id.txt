@@ -1,1 +1,0 @@
-org.vunkers.thingsboard.app

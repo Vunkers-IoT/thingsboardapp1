@@ -78,6 +78,9 @@ class SZh extends S {
   String get passwordResetLinkSuccessfullySentNotification => '密码重置链接已发送';
 
   @override
+  String get emailVersificationSuccessfullySentNotification => 'Email verification link was successfully sent!';
+
+  @override
   String get or => '或';
 
   @override
@@ -513,6 +516,26 @@ class SZh extends S {
 
   @override
   String get europeRegionShort => 'Frankfurt';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get deviceList => 'Device list';
+
+  @override
+  String get dashboards => 'Dashboards';
+
+  @override
+  String get isRequiredText => 'is required.';
+
+  @override
+  String get updateRequired => 'Update required';
+
+  @override
+  String updateTo(Object version) {
+    return 'Update to $version';
+  }
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).

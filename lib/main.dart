@@ -65,30 +65,6 @@ class ThingsboardApp extends StatelessWidget {
       ),
     );
 
-<<<<<<< HEAD
-    return WlThemeWidget(
-      getIt<ThingsboardAppRouter>().tbContext,
-      wlThemedWidgetBuilder: (context, data, wlParams) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        scaffoldMessengerKey:
-            getIt<ThingsboardAppRouter>().tbContext.messengerKey,
-        localizationsDelegates: const [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: S.supportedLocales,
-        title: wlParams.appTitle!,
-        themeMode: ThemeMode.light,
-        theme: data,
-        darkTheme: tbDarkTheme,
-        onGenerateRoute: getIt<ThingsboardAppRouter>().router.generator,
-        navigatorObservers: [
-          getIt<ThingsboardAppRouter>().tbContext.routeObserver,
-        ],
-      ),
-=======
     return OrientationBuilder(
       builder: (context, orientation) {
         getIt<ILayoutService>().setDeviceScreenSize(
@@ -99,6 +75,7 @@ class ThingsboardApp extends StatelessWidget {
         return WlThemeWidget(
           getIt<ThingsboardAppRouter>().tbContext,
           wlThemedWidgetBuilder: (context, data, wlParams) => MaterialApp(
+            debugShowCheckedModeBanner: false,
             scaffoldMessengerKey:
                 getIt<ThingsboardAppRouter>().tbContext.messengerKey,
             localizationsDelegates: const [
@@ -119,7 +96,6 @@ class ThingsboardApp extends StatelessWidget {
           ),
         );
       },
->>>>>>> repo-origen/release/1.5.0
     );
   }
 }
