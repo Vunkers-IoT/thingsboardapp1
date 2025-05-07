@@ -126,7 +126,7 @@ class _AssigneeListWidgetState extends State<AlarmAssigneeListWidget> {
             ),
             Expanded(
               child: PagedListView<UsersAssignQuery, AssigneeEntity>.separated(
-                pagingController:
+                controller:
                     getIt<AlarmAssigneePaginationRepository>().pagingController,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

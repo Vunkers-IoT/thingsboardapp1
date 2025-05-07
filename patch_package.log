@@ -1,0 +1,12 @@
+[2025-03-14T12:16:16.724592] Starting patch_package with arguments: device_info_plus
+[2025-03-14T12:16:16.752519] Package name is missing for command device_info_plus
+[2025-03-14T12:16:16.754512] Usage: dart run patch_package <command> [<package_name>]
+[2025-03-14T12:16:16.754617] Commands: start <package_name>, done <package_name>, apply
+[2025-03-14T12:16:25.188486] Starting patch_package with arguments: device_info_plus
+[2025-03-14T12:16:25.203446] Package name is missing for command device_info_plus
+[2025-03-14T12:16:25.203699] Usage: dart run patch_package <command> [<package_name>]
+[2025-03-14T12:16:25.258844] Commands: start <package_name>, done <package_name>, apply
+[2025-03-14T12:51:58.649286] Starting patch_package with arguments: device_info_plus
+[2025-03-14T12:51:58.661254] Package name is missing for command device_info_plus
+[2025-03-14T12:51:58.661254] Usage: dart run patch_package <command> [<package_name>]
+[2025-03-14T12:51:58.661254] Commands: start <package_name>, done <package_name>, apply

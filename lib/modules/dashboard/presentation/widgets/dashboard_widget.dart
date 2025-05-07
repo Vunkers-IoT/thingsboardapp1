@@ -53,6 +53,8 @@ class _DashboardState extends TbContextState<DashboardWidget> {
     allowsInlineMediaPlayback: true,
     allowsBackForwardNavigationGestures: false,
   );
+  
+  get getHomeDashboard => getHomeDashboard;
 
   @override
   Widget build(BuildContext context) {
@@ -275,30 +277,17 @@ class _DashboardState extends TbContextState<DashboardWidget> {
 
     dashboardController = DashboardController(widget.tbContext);
     log = widget.tbContext.log;
-  }
-
-  @override
-  void dispose() {
-    dashboardLoading.dispose();
-    dashboardController.dispose();
-    super.dispose();
+;
   }
 
   SnackBar _buildWarnSnackBar(String message) {
     return SnackBar(
-      duration: const Duration(seconds: 10),
-      backgroundColor: const Color(0xFFdc6d1b),
       content: Text(
         message,
-        style: const TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.white),
       ),
-      action: SnackBarAction(
-        label: 'Close',
-        textColor: Colors.white,
-        onPressed: () {
-          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        },
-      ),
+      backgroundColor: Colors.orange,
+      duration: Duration(seconds: 3),
     );
   }
 }

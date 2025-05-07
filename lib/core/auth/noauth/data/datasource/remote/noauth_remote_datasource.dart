@@ -63,7 +63,7 @@ class NoAuthRemoteDatasource implements INoAuthRemoteDatasource {
     await tbContext.reInit(
       endpoint: endpoint,
       onDone: onDone,
-      onAuthError: onError,
+      onAuthError: onError, onError: null,
     );
   }
 

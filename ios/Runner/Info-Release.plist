@@ -24,7 +24,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>app.pe.thingsboard.org</string>
+			<string>org.vunkers.thingsboard.app</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>tbscheme</string>

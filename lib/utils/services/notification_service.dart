@@ -11,6 +11,7 @@ import 'package:thingsboard_app/modules/notification/service/notifications_local
 import 'package:thingsboard_app/thingsboard_client.dart';
 import 'package:thingsboard_app/utils/utils.dart';
 
+
 class NotificationService {
   static NotificationService? _instance;
   static FirebaseMessaging _messaging = FirebaseMessaging.instance;

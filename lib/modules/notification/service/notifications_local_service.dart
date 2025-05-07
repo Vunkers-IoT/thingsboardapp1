@@ -1,6 +1,6 @@
 import 'dart:async';
-
-import 'package:flutter_new_badger/flutter_new_badger.dart';
+import 'package:flutter/foundation.dart'; // Importa esta librería para kIsWeb
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:thingsboard_app/locator.dart';
 import 'package:thingsboard_app/modules/notification/service/i_notifications_local_service.dart';
 import 'package:thingsboard_app/thingsboard_client.dart';
@@ -19,7 +19,10 @@ final class NotificationsLocalService implements INotificationsLocalService {
     final updatedCounter = int.parse(counter ?? '0') + 1;
     await storage.setItem(notificationCounterKey, updatedCounter.toString());
 
-    FlutterNewBadger.setBadge(updatedCounter);
+    if (!kIsWeb) {
+      FlutterAppBadger.updateBadgeCount(updatedCounter);
+    }
+    
     notificationsNumberStream.add(updatedCounter);
   }
 
@@ -28,10 +31,14 @@ final class NotificationsLocalService implements INotificationsLocalService {
     final counter = await storage.getItem(notificationCounterKey);
     final updatedCounter = int.parse(counter ?? '0') - 1;
     if (updatedCounter <= 0) {
-      FlutterNewBadger.removeBadge();
+      if (!kIsWeb) {
+        FlutterAppBadger.removeBadge();
+      }
       notificationsNumberStream.add(0);
     } else {
-      FlutterNewBadger.setBadge(updatedCounter);
+      if (!kIsWeb) {
+        FlutterAppBadger.updateBadgeCount(updatedCounter);
+      }
       await storage.setItem(notificationCounterKey, updatedCounter.toString());
       notificationsNumberStream.add(updatedCounter);
     }
@@ -45,14 +52,18 @@ final class NotificationsLocalService implements INotificationsLocalService {
 
   @override
   Future<void> clearNotificationBadgeCount() async {
-    FlutterNewBadger.removeBadge();
+    if (!kIsWeb) {
+      FlutterAppBadger.removeBadge();
+    }
     storage.deleteItem(notificationCounterKey);
     notificationsNumberStream.add(0);
   }
 
   @override
   Future<void> updateNotificationsCount(int count) async {
-    FlutterNewBadger.setBadge(count);
+    if (!kIsWeb) {
+      FlutterAppBadger.updateBadgeCount(count);
+    }
     storage.setItem(notificationCounterKey, count.toString());
     notificationsNumberStream.add(count);
   }

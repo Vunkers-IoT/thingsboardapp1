@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+
 class TbMainNavigationItem extends Equatable {
   const TbMainNavigationItem({
     required this.page,
@@ -13,6 +14,7 @@ class TbMainNavigationItem extends Equatable {
     this.additionalIconLarge,
   });
 
+
   final Widget page;
   final String title;
   final IconData icon;
@@ -21,6 +23,7 @@ class TbMainNavigationItem extends Equatable {
   final bool showAdditionalIcon;
   final Widget? additionalIconSmall;
   final Widget? additionalIconLarge;
+
 
   @override
   List<Object?> get props => [
@@ -33,4 +36,5 @@ class TbMainNavigationItem extends Equatable {
         additionalIconSmall,
         additionalIconLarge,
       ];
+
 }

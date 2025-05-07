@@ -36,7 +36,7 @@ final class UserDetailsParams {
 
   final String? firstName;
   final String? lastName;
-  final String email;
+  final String email; 
 }
 
 final class UserDetailsOutput {

@@ -75,6 +75,7 @@ class ThingsboardApp extends StatelessWidget {
       ),
     );
 
+
     return WlThemeWidget(
       getIt<ThingsboardAppRouter>().tbContext,
       wlThemedWidgetBuilder: (context, data, wlParams) => MaterialApp(
@@ -98,6 +99,7 @@ class ThingsboardApp extends StatelessWidget {
           getIt<ThingsboardAppRouter>().tbContext.routeObserver,
         ],
       ),
+
     );
   }
 }

@@ -24,6 +24,12 @@ class _HomePageState extends TbContextState<HomePage>
   }
 
   @override
+  void initState() {
+    super.initState();
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     super.build(context);
 
