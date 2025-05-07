@@ -1,5 +1,8 @@
 plugins {
     id 'com.android.application'
+    // START: FlutterFire Configuration
+    id 'com.google.gms.google-services'
+    // END: FlutterFire Configuration
     id 'kotlin-android'
 
     id 'dev.flutter.flutter-gradle-plugin'
@@ -22,7 +25,9 @@ def flutterVersionCode = localProperties.getProperty('flutter.versionCode', '7')
 def flutterVersionName = localProperties.getProperty('flutter.versionName', '7.0.0')
 
 android {
-    compileSdkVersion flutter.compileSdkVersion.toInteger()
+
+    compileSdk = 34
+
 
 
     defaultConfig {
@@ -42,6 +47,7 @@ android {
         }
     }
 
+
     buildTypes {
         release {
             signingConfig signingConfigs.release
@@ -50,6 +56,12 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+
+    dependencies {
+        implementation 'androidx.browser:browser:1.0.0'
+        implementation platform('com.google.firebase:firebase-bom:32.2.3')
+        implementation 'com.google.firebase:firebase-analytics'
+
     }
 }
 

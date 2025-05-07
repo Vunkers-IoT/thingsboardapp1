@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -20,18 +19,17 @@ import 'package:thingsboard_app/core/context/tb_context_widget.dart';
 import 'package:thingsboard_app/thingsboard_client.dart';
 import 'package:thingsboard_app/utils/ui/tb_text_styles.dart';
 import 'package:thingsboard_app/widgets/tb_progress_indicator.dart';
-
 import 'login_page_background.dart';
+import 'dart:developer' as log;
 
 class LoginPage extends TbPageWidget {
-  LoginPage(TbContext tbContext, {super.key}) : super(tbContext);
+  LoginPage({required TbContext tbContext, super.key}) : super(tbContext);
 
   @override
   State<StatefulWidget> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends TbPageState<LoginPage>
-    with WidgetsBindingObserver {
+class _LoginPageState extends TbPageState<LoginPage> with WidgetsBindingObserver {
   final ButtonStyle _oauth2IconButtonStyle = OutlinedButton.styleFrom(
     padding: const EdgeInsets.all(16),
     alignment: Alignment.center,
@@ -39,9 +37,7 @@ class _LoginPageState extends TbPageState<LoginPage>
 
   final _isLoginNotifier = ValueNotifier<bool>(false);
   final _showPasswordNotifier = ValueNotifier<bool>(false);
-
   final _loginFormKey = GlobalKey<FormBuilderState>();
-
   Region? selectedRegion;
 
   @override
@@ -57,8 +53,8 @@ class _LoginPageState extends TbPageState<LoginPage>
 
   @override
   void dispose() {
-    super.dispose();
     WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
@@ -68,455 +64,366 @@ class _LoginPageState extends TbPageState<LoginPage>
     }
   }
 
-@override
-Widget build(BuildContext context) {
-  return BlocProvider(
-    create: (_) => AuthBloc(tbClient: tbClient, tbContext: tbContext)
-      ..add(
-        AuthFetchEvent(
-          packageName: tbContext.packageName,
-          platformType: tbContext.platformType,
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => AuthBloc(tbClient: tbClient, tbContext: tbContext)
+        ..add(
+          AuthFetchEvent(
+            packageName: tbContext.packageName,
+            platformType: tbContext.platformType,
+          ),
         ),
-      ),
-    child: Scaffold(
-      body: Stack(
-        children: [
-          const LoginPageBackground(),
-          ValueListenableBuilder(
-            valueListenable: _isLoginNotifier,
-            builder: (BuildContext context, bool loading, child) {
-              if (loading) {
-                var data = MediaQuery.of(context);
-                var bottomPadding = data.padding.top;
-                bottomPadding += kToolbarHeight;
-                return SizedBox.expand(
-                  child: ClipRect(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200.withOpacity(0.2),
-                        ),
-                        child: Container(
-                          padding: EdgeInsets.only(bottom: bottomPadding),
-                          alignment: Alignment.center,
-                          child: TbProgressIndicator(
-                            tbContext,
-                            size: 50.0,
+      child: Scaffold(
+        body: Stack(
+          children: [
+            const LoginPageBackground(),
+            BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                return ValueListenableBuilder<bool>(
+                  valueListenable: _isLoginNotifier,
+                  builder: (context, loading, child) {
+                    if (loading || state is AuthLoadingState) {
+                      var data = MediaQuery.of(context);
+                      var bottomPadding = data.padding.top + kToolbarHeight;
+                      return SizedBox.expand(
+                        child: ClipRect(
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                            child: Container(
+                              color: const Color.fromARGB(153, 255, 255, 255),
+                              child: Center(
+                                child: TbProgressIndicator(tbContext, size: 50.0),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-                );
-              } else {
-                return const SizedBox.shrink();
-              }
-            },
-          ),
-          BlocBuilder<AuthBloc, AuthState>(
-            builder: (context, state) {
-              switch (state) {
-                case AuthLoadingState():
-                  return SizedBox.expand(
-                    child: Container(
-                      color: const Color(0x99FFFFFF),
-                      child: Center(
-                        child: TbProgressIndicator(tbContext, size: 50.0),
-                      ),
-                    ),
-                  );
-                case AuthDataState():
-                  return Positioned.fill(
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        return SingleChildScrollView(
-                          padding: const EdgeInsets.fromLTRB(24, 71, 24, 24),
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              minHeight: constraints.maxHeight - (71 + 24),
-                            ),
-                            child: IntrinsicHeight(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      tbContext.wlService.loginLogoImage != null
-                                          ? SizedBox(
-                                              height: 29,
-                                              width: 133,
-                                              child: tbContext
-                                                  .wlService.loginLogoImage!,
-                                            )
-                                          : const SizedBox(height: 25),
-                                      Visibility(
-                                        visible: selectedRegion != null,
-                                        child: TextButton(
-                                          onPressed: () {
-                                            
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                selectedRegion
-                                                        ?.regionToString() ??
-                                                    '',
-                                                style: TbTextStyles.bodyLarge,
-                                              ),
-                                              const SizedBox(width: 6),
-                                              const Padding(
-                                                padding:
-                                                    EdgeInsets.only(top: 4),
-                                                child: Icon(
-                                                  Icons.arrow_forward_ios_rounded,
-                                                  size: 12,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  if (tbContext.wlService.loginShowNameVersion ==
-                                          true &&
-                                      !(tbContext.wlService.showNameBottom ==
-                                          true))
-                                    Text(
-                                      tbContext.wlService.platformNameAndVersion,
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        height: 2,
-                                      ),
-                                    ),
-                                  const SizedBox(height: 32),
-                                  Align(
-                                    child: Text(
-                                      S.of(context).loginNotification,
-                                      style: TbTextStyles.titleLarge.copyWith(
-                                        color: Colors.black.withOpacity(.87),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 48),
-                                  if (state.oAuthClients.isNotEmpty)
-                                    _buildOAuth2Buttons(state.oAuthClients),
-                                  Visibility(
-                                    visible: state.oAuthClients.isEmpty,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      children: [
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 16,
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              'Login with',
-                                              style: TbTextStyles.bodyMedium
-                                                  .copyWith(
-                                                color:
-                                                    Colors.black.withOpacity(.54),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            OutlinedButton(
-                                              style: _oauth2IconButtonStyle,
-                                              onPressed: () async {
-                                                FocusScope.of(context).unfocus();
-                                                try {
-                                                  final barcode =
-                                                      await tbContext.navigateTo(
-                                                    '/qrCodeScan',
-                                                    transition:
-                                                        TransitionType.nativeModal,
-                                                  );
+                      );
+                    }
 
-                                                  if (barcode != null &&
-                                                      barcode.code != null) {
-                                                    tbContext.navigateByAppLink(
-                                                      barcode.code,
-                                                    );
-                                                  } else {}
-                                                } catch (e) {
-                                                  log.error(
-                                                    'Login with qr code error',
-                                                    e,
-                                                  );
-                                                }
+                    if (state is AuthDataState) {
+                      return Positioned.fill(
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            return SingleChildScrollView(
+                              padding: const EdgeInsets.fromLTRB(24, 71, 24, 24),
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  minHeight: constraints.maxHeight - (71 + 24),
+                                ),
+                                child: IntrinsicHeight(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          tbContext.wlService.loginLogoImage != null
+                                              ? SizedBox(
+                                                  height: 29,
+                                                  width: 133,
+                                                  child: Image.asset(
+                                                    'assets/images/vunkers_logo_retallat_250.png',
+                                                  ),
+                                                )
+                                              : const SizedBox(height: 25),
+                                          Visibility(
+                                            visible: selectedRegion != null,
+                                            child: TextButton(
+                                              onPressed: () {
+                                                tbContext.showFullScreenDialog(
+                                                  ChooseRegionScreen(
+                                                    tbContext,
+                                                    nASelected: selectedRegion == Region.northAmerica,
+                                                    europeSelected: selectedRegion == Region.europe,
+                                                  ),
+                                                );
                                               },
                                               child: Row(
                                                 children: [
-                                                  SvgPicture.asset(
-                                                    ThingsboardImage.oauth2Logos[
-                                                        'qr-code-logo']!,
-                                                    height: 24,
+                                                  Text(
+                                                    selectedRegion?.regionToString() ?? '',
+                                                    style: TbTextStyles.bodyLarge,
                                                   ),
-                                                  const SizedBox(width: 8),
-                                                  const Text(
-                                                    'Scan QR code',
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w400,
+                                                  const SizedBox(width: 6),
+                                                  const Padding(
+                                                    padding: EdgeInsets.only(top: 4),
+                                                    child: Icon(
+                                                      Icons.arrow_forward_ios_rounded,
+                                                      size: 12,
                                                     ),
                                                   ),
                                                 ],
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: 10,
-                                      bottom: 16,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Flexible(
-                                          child: Divider(
-                                            color: Colors.black.withOpacity(.12),
+                                          ),
+                                        ],
+                                      ),
+                                      if (tbContext.wlService.loginShowNameVersion == true &&
+                                          !(tbContext.wlService.showNameBottom == true))
+                                        Text(
+                                          tbContext.wlService.platformNameAndVersion,
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            height: 2,
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 16,
-                                          ),
-                                          child: Text(
-                                            S.of(context).or,
-                                            style: TbTextStyles.bodyMedium
-                                                .copyWith(
-                                              color:
-                                                  Colors.black.withOpacity(.54),
-                                            ),
+                                      const SizedBox(height: 32),
+                                      Align(
+                                        child: Text(
+                                          S.of(context).loginNotification,
+                                          style: TbTextStyles.titleLarge.copyWith(
+                                            color: Colors.black.withOpacity(.87),
                                           ),
                                         ),
-                                        Flexible(
-                                          child: Divider(
-                                            color: Colors.black.withOpacity(.12),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  FormBuilder(
-                                    key: _loginFormKey,
-                                    autovalidateMode: AutovalidateMode.disabled,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      children: [
-                                        FormBuilderTextField(
-                                          name: 'username',
-                                          keyboardType:
-                                              TextInputType.emailAddress,
-                                          validator:
-                                              FormBuilderValidators.compose([
-                                            FormBuilderValidators.required(
-                                              errorText:
-                                                  S.of(context).emailRequireText,
-                                            ),
-                                            FormBuilderValidators.email(
-                                              errorText:
-                                                  S.of(context).emailInvalidText,
-                                            ),
-                                          ]),
-                                          decoration: InputDecoration(
-                                            border: const OutlineInputBorder(),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    Colors.black.withOpacity(.12),
+                                      ),
+                                      const SizedBox(height: 48),
+                                      if (state.oAuthClients.isNotEmpty)
+                                        _buildOAuth2Buttons(state.oAuthClients),
+                                      Visibility(
+                                        visible: state.oAuthClients.isEmpty,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                          children: [
+                                            Container(
+                                              padding: const EdgeInsets.symmetric(vertical: 16),
+                                              child: Center(
+                                                child: Text(
+                                                  'Login with',
+                                                  style: TbTextStyles.bodyMedium.copyWith(
+                                                    color: Colors.black.withOpacity(.54),
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                            labelText: S.of(context).email,
-                                            labelStyle: TbTextStyles.bodyLarge
-                                                .copyWith(
-                                              color:
-                                                  Colors.black.withOpacity(.54),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                OutlinedButton(
+                                                  style: _oauth2IconButtonStyle,
+                                                  onPressed: () async {
+                                                    FocusScope.of(context).unfocus();
+                                                    try {
+                                                      final barcode = await tbContext.navigateTo(
+                                                        '/qrCodeScan',
+                                                        transition: TransitionType.nativeModal,
+                                                      );
+                                                      if (barcode != null && barcode.code != null) {
+                                                        tbContext.navigateByAppLink(barcode.code);
+                                                      }
+                                                    } catch (e) {
+                                                      log.log('Login with qr code error: $e', level: 1000);
+                                                    }
+                                                  },
+                                                  child: Row(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                        ThingsboardImage.oauth2Logos['qr-code-logo']!,
+                                                        height: 24,
+                                                      ),
+                                                      const SizedBox(width: 8),
+                                                      const Text(
+                                                        'Scan QR code',
+                                                        style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight: FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ),
+                                          ],
                                         ),
-                                        const SizedBox(height: 24),
-                                        ValueListenableBuilder(
-                                          valueListenable: _showPasswordNotifier,
-                                          builder: (
-                                            BuildContext context,
-                                            bool showPassword,
-                                            child,
-                                          ) {
-                                            return FormBuilderTextField(
-                                              name: 'password',
-                                              obscureText: !showPassword,
-                                              validator:
-                                                  FormBuilderValidators.compose([
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 10, bottom: 16),
+                                        child: Row(
+                                          children: [
+                                            Flexible(
+                                              child: Divider(color: Colors.black.withOpacity(.12)),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                                              child: Text(
+                                                S.of(context).or,
+                                                style: TbTextStyles.bodyMedium.copyWith(
+                                                  color: Colors.black.withOpacity(.54),
+                                                ),
+                                              ),
+                                            ),
+                                            Flexible(
+                                              child: Divider(color: Colors.black.withOpacity(.12)),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      FormBuilder(
+                                        key: _loginFormKey,
+                                        autovalidateMode: AutovalidateMode.disabled,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                          children: [
+                                            FormBuilderTextField(
+                                              name: 'username',
+                                              keyboardType: TextInputType.emailAddress,
+                                              validator: FormBuilderValidators.compose([
                                                 FormBuilderValidators.required(
-                                                  errorText: S.of(context)
-                                                      .passwordRequireText,
+                                                  errorText: S.of(context).emailRequireText,
+                                                ),
+                                                FormBuilderValidators.email(
+                                                  errorText: S.of(context).emailInvalidText,
                                                 ),
                                               ]),
                                               decoration: InputDecoration(
-                                                suffixIcon: IconButton(
-                                                  icon: Icon(
-                                                    showPassword
-                                                        ? Icons.visibility
-                                                        : Icons.visibility_off,
-                                                  ),
-                                                  onPressed: () {
-                                                    _showPasswordNotifier.value =
-                                                        !_showPasswordNotifier
-                                                            .value;
-                                                  },
-                                                ),
-                                                border:
-                                                    const OutlineInputBorder(),
+                                                border: const OutlineInputBorder(),
                                                 enabledBorder: OutlineInputBorder(
                                                   borderSide: BorderSide(
-                                                    color:
-                                                        Colors.black.withOpacity(.12),
+                                                    color: Colors.black.withOpacity(.12),
                                                   ),
                                                 ),
-                                                labelText: S.of(context).password,
-                                                labelStyle: TbTextStyles.bodyLarge
-                                                    .copyWith(
-                                                  color:
-                                                      Colors.black.withOpacity(.54),
+                                                labelText: S.of(context).email,
+                                                labelStyle: TbTextStyles.bodyLarge.copyWith(
+                                                  color: Colors.black.withOpacity(.54),
                                                 ),
                                               ),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      TextButton(
-                                        onPressed: () {
-                                          _forgotPassword();
-                                        },
-                                        child: Text(
-                                          S.of(context).passwordForgotText,
-                                          style: TbTextStyles.bodyMedium,
+                                            ),
+                                            const SizedBox(height: 24),
+                                            ValueListenableBuilder<bool>(
+                                              valueListenable: _showPasswordNotifier,
+                                              builder: (context, showPassword, child) {
+                                                return FormBuilderTextField(
+                                                  name: 'password',
+                                                  obscureText: !showPassword,
+                                                  validator: FormBuilderValidators.compose([
+                                                    FormBuilderValidators.required(
+                                                      errorText: S.of(context).passwordRequireText,
+                                                    ),
+                                                  ]),
+                                                  decoration: InputDecoration(
+                                                    suffixIcon: IconButton(
+                                                      icon: Icon(
+                                                        showPassword ? Icons.visibility : Icons.visibility_off,
+                                                      ),
+                                                      onPressed: () {
+                                                        _showPasswordNotifier.value = !_showPasswordNotifier.value;
+                                                      },
+                                                    ),
+                                                    border: const OutlineInputBorder(),
+                                                    enabledBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: Colors.black.withOpacity(.12),
+                                                      ),
+                                                    ),
+                                                    labelText: S.of(context).password,
+                                                    labelStyle: TbTextStyles.bodyLarge.copyWith(
+                                                      color: Colors.black.withOpacity(.54),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ],
                                         ),
                                       ),
+                                      const SizedBox(height: 10),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          TextButton(
+                                            onPressed: _forgotPassword,
+                                            child: Text(
+                                              S.of(context).passwordForgotText,
+                                              style: TbTextStyles.bodyMedium,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const Spacer(),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(vertical: 16),
+                                          backgroundColor: const Color.fromRGBO(29, 233, 182, 0.92),
+                                        ),
+                                        onPressed: _login,
+                                        child: Text(
+                                          S.of(context).login,
+                                          style: TbTextStyles.labelMedium,
+                                        ),
+                                      ),
+                                      if (state.selfRegistrationParams != null)
+                                        Column(
+                                          children: [
+                                            const SizedBox(height: 8),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  S.of(context).newUserText,
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    height: 20 / 14,
+                                                  ),
+                                                ),
+                                                TextButton(
+                                                  onPressed: _signup,
+                                                  child: Text(
+                                                    S.of(context).createAccount,
+                                                    style: TextStyle(
+                                                      color: Theme.of(context).colorScheme.primary,
+                                                      letterSpacing: 1,
+                                                      fontSize: 14,
+                                                      height: 20 / 14,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      if (tbContext.wlService.loginShowNameVersion == true &&
+                                          tbContext.wlService.showNameBottom == true)
+                                        Column(
+                                          children: [
+                                            const SizedBox(height: 38),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  tbContext.wlService.platformNameAndVersion,
+                                                  style: const TextStyle(fontSize: 12),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      if (tbContext.wlService.loginShowNameVersion != true ||
+                                          tbContext.wlService.showNameBottom != true)
+                                        const SizedBox(
+                                          height: 48,
+                                        ),
                                     ],
                                   ),
-                                  const Spacer(),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 16,
-                                      ),
-                                      backgroundColor:
-                                          Color.fromRGBO(29, 233, 182, 0.92),
-                                    ),
-                                    onPressed: () {
-                                      _login();
-                                    },
-                                    child: Text(
-                                      S.of(context).login,
-                                      style: TbTextStyles.labelMedium,
-                                    ),
-                                  ),
-                                  if (state.selfRegistrationParams != null)
-                                    Column(
-                                      children: [
-                                        const SizedBox(height: 8),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              S.of(context).newUserText,
-                                              style: const TextStyle(
-                                                fontSize: 14,
-                                                height: 20 / 14,
-                                              ),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {
-                                                _signup();
-                                              },
-                                              child: Text(
-                                                S.of(context).createAccount,
-                                                style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .colorScheme.primary,
-                                                  letterSpacing: 1,
-                                                  fontSize: 14,
-                                                  height: 20 / 14,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  if (tbContext.wlService.loginShowNameVersion ==
-                                          true &&
-                                      tbContext.wlService.showNameBottom == true)
-                                    Column(
-                                      children: [
-                                        const SizedBox(height: 38),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                              tbContext.wlService
-                                                  .platformNameAndVersion,
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  if (tbContext.wlService.loginShowNameVersion !=
-                                          true ||
-                                      tbContext.wlService.showNameBottom !=
-                                          true)
-                                    SizedBox(
-                                      height: state.selfRegistrationParams != null
-                                          ? 20
-                                          : 48,
-                                    ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                default:
-                  return const SizedBox.shrink();
-              }
-            },
-          ),
-        ],
+                            );
+                          },
+                        ),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                );
+              },
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   Widget _buildOAuth2Buttons(List<OAuth2ClientInfo> clients) {
     return Column(
@@ -560,21 +467,15 @@ Widget build(BuildContext context) {
                       '/qrCodeScan',
                       transition: TransitionType.nativeModal,
                     );
-
                     if (barcode != null && barcode.code != null) {
-                      tbContext.navigateByAppLink(
-                        barcode.code,
-                      );
-                    } else {}
+                      tbContext.navigateByAppLink(barcode.code);
+                    }
                   } catch (e) {
-                    log.error(
-                      'Login with qr code error',
-                      e,
-                    );
+                    log.log('Login with qr code error: $e', level: 1000);
                   }
                 },
                 child: SvgPicture.asset(
-                  ThingsboardImage.oauth2Logos['qr-code']!,
+                  ThingsboardImage.oauth2Logos['qr-code-logo']!,
                   height: 24,
                 ),
               ),
@@ -585,11 +486,7 @@ Widget build(BuildContext context) {
     );
   }
 
-  Widget _buildOAuth2Button(
-    OAuth2ClientInfo client,
-    bool expand,
-    bool isLast,
-  ) {
+  Widget _buildOAuth2Button(OAuth2ClientInfo client, bool expand, bool isLast) {
     Widget? icon;
     if (client.icon != null) {
       if (ThingsboardImage.oauth2Logos.containsKey(client.icon)) {
@@ -604,8 +501,7 @@ Widget build(BuildContext context) {
         }
         var iconData = MdiIcons.fromString(strIcon);
         if (iconData != null) {
-          icon =
-              Icon(iconData, size: 24, color: Theme.of(context).primaryColor);
+          icon = Icon(iconData, size: 24, color: Theme.of(context).primaryColor);
         }
       }
     }
@@ -632,7 +528,6 @@ Widget build(BuildContext context) {
   }
 
   void _oauth2ButtonPressed(OAuth2ClientInfo client) async {
-    
     FocusScope.of(context).unfocus();
     _isLoginNotifier.value = true;
     try {
@@ -648,7 +543,7 @@ Widget build(BuildContext context) {
         showErrorNotification(result.error!);
       }
     } catch (e) {
-      log.error('Auth Error:', e);
+      log.log('Auth Error: $e', level: 1000);
       _isLoginNotifier.value = false;
     }
   }
@@ -664,19 +559,18 @@ Widget build(BuildContext context) {
         await tbClient.login(LoginRequest(username, password));
       } catch (e) {
         _isLoginNotifier.value = false;
-        if (e is! ThingsboardError ||
-            e.errorCode == ThingsBoardErrorCode.general) {
+        if (e is! ThingsboardError || e.errorCode == ThingsBoardErrorCode.general) {
           await tbContext.onFatalError(e);
         }
       }
     }
   }
 
-  void _forgotPassword() async {
+  void _forgotPassword() {
     navigateTo('/login/resetPasswordRequest');
   }
 
-  void _signup() async {
+  void _signup() {
     navigateTo('/signup', replace: true);
   }
 }

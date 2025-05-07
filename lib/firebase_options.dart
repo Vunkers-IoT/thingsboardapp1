@@ -5,7 +5,6 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
-  
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -20,7 +19,12 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
+
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -43,6 +47,7 @@ class DefaultFirebaseOptions {
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
 
+
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -52,7 +57,8 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyA5qvuon2_ChshOuVHD1bI67ku2EKusP10',
-    appId: '1:723748549577:android:eafab6b90ec49c80d5ae18',
+
+    appId: '1:723748549577:android:802fbecf7c0a95bbd5ae18',
     messagingSenderId: '723748549577',
     projectId: 'thingsboard-iot-a8a27',
     storageBucket: 'thingsboard-iot-a8a27.firebasestorage.app',
@@ -67,16 +73,5 @@ class DefaultFirebaseOptions {
     iosBundleId: 'org.thingsboard.pe.app',
   );
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDv451tb8_rFWyTjj3LMvqLpHLV7sCGNXw',
-    appId: '1:723748549577:web:e00a904168f6b26dd5ae18',
-    messagingSenderId: '723748549577',
-    projectId: 'thingsboard-iot-a8a27',
-    authDomain: 'thingsboard-iot-a8a27.firebaseapp.com',
-    storageBucket: 'thingsboard-iot-a8a27.firebasestorage.app',
-    measurementId: 'G-9LHGMW361E',
-  );
-
-  
-
 }
+
