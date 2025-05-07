@@ -47,7 +47,8 @@ dependencies:
   preload_page_view: ^0.2.0
   flutter_localizations:
     sdk: flutter
-  firebase_core: ^3.8.1
+
+  firebase_core: ^3.12.1
   firebase_messaging: ^15.0.1
   flutter_local_notifications: ^18.0.1
   flutter_new_badger: ^1.0.1
@@ -67,6 +68,7 @@ dependencies:
   expandable: ^5.0.1
   focused_menu: ^1.0.5
   recaptcha_enterprise_flutter: ^18.6.1
+  uni_links: ^0.5.1 
 
 dev_dependencies:
   flutter_test:

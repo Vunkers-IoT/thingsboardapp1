@@ -94,85 +94,73 @@ Widget build(BuildContext context) {
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
                       child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200.withOpacity(0.2),
-                        ),
-                        child: Container(
-                          padding: EdgeInsets.only(bottom: bottomPadding),
-                          alignment: Alignment.center,
-                          child: TbProgressIndicator(
-                            tbContext,
-                            size: 50.0,
-                          ),
+
+                        color: const Color.fromARGB(153, 255, 255, 255),
+                        child: Center(
+                          child: TbProgressIndicator(tbContext, size: 50.0),
                         ),
                       ),
-                    ),
-                  ),
-                );
-              } else {
-                return const SizedBox.shrink();
-              }
-            },
-          ),
-          BlocBuilder<AuthBloc, AuthState>(
-            builder: (context, state) {
-              switch (state) {
-                case AuthLoadingState():
-                  return SizedBox.expand(
-                    child: Container(
-                      color: const Color(0x99FFFFFF),
-                      child: Center(
-                        child: TbProgressIndicator(tbContext, size: 50.0),
-                      ),
-                    ),
-                  );
-                case AuthDataState():
-                  return Positioned.fill(
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        return SingleChildScrollView(
-                          padding: const EdgeInsets.fromLTRB(24, 71, 24, 24),
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              minHeight: constraints.maxHeight - (71 + 24),
-                            ),
-                            child: IntrinsicHeight(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      tbContext.wlService.loginLogoImage != null
-                                          ? SizedBox(
-                                              height: 29,
-                                              width: 133,
-                                              child: tbContext
-                                                  .wlService.loginLogoImage!,
-                                            )
-                                          : const SizedBox(height: 25),
-                                      Visibility(
-                                        visible: selectedRegion != null,
-                                        child: TextButton(
-                                          onPressed: () {
-                                            
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                selectedRegion
-                                                        ?.regionToString() ??
-                                                    '',
-                                                style: TbTextStyles.bodyLarge,
-                                              ),
-                                              const SizedBox(width: 6),
-                                              const Padding(
-                                                padding:
-                                                    EdgeInsets.only(top: 4),
-                                                child: Icon(
-                                                  Icons.arrow_forward_ios_rounded,
-                                                  size: 12,
+                    );
+                  case AuthDataState():
+                    return Positioned.fill(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return SingleChildScrollView(
+                            padding: const EdgeInsets.fromLTRB(24, 71, 24, 24),
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                minHeight: constraints.maxHeight - (71 + 24),
+                              ),
+                              child: IntrinsicHeight(
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        tbContext.wlService.loginLogoImage !=
+                                                null
+                                            ? SizedBox(
+                                                height: 29,
+                                                width: 133,
+                                                child: Image.asset(
+                                                     'assets/images/vunkers_logo retallat_250.png')
+                                              )
+                                            : const SizedBox(height: 25),
+                                        Visibility(
+                                          visible: selectedRegion != null,
+                                          child: TextButton(
+                                            onPressed: () {
+                                              tbContext.showFullScreenDialog(
+                                                ChooseRegionScreen(
+                                                  tbContext,
+                                                  nASelected: selectedRegion ==
+                                                      Region.northAmerica,
+                                                  europeSelected:
+                                                      selectedRegion ==
+                                                          Region.europe,
+                                                ),
+                                              );
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  selectedRegion
+                                                          ?.regionToString() ??
+                                                      '',
+                                                  style: TbTextStyles.bodyLarge,
+                                                ),
+                                                const SizedBox(width: 6),
+                                                const Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 4),
+                                                  child: Icon(
+                                                    Icons
+                                                        .arrow_forward_ios_rounded,
+                                                    size: 12,
+                                                  ),
                                                 ),
                                               ),
                                             ],
@@ -400,27 +388,21 @@ Widget build(BuildContext context) {
                                         ),
                                       ],
                                     ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      TextButton(
-                                        onPressed: () {
-                                          _forgotPassword();
-                                        },
-                                        child: Text(
-                                          S.of(context).passwordForgotText,
-                                          style: TbTextStyles.bodyMedium,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
+
+                                    const Spacer(),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.symmetric(
                                         vertical: 16,
+                                      ),
+                                      backgroundColor: const Color.fromRGBO(29, 233, 182, 0.92),
+                                      ),
+                                      onPressed: () {
+                                      _login();
+                                      },
+                                      child: Text(
+                                      S.of(context).login,
+                                      style: TbTextStyles.labelMedium,
                                       ),
                                       backgroundColor:
                                           Color.fromRGBO(29, 233, 182, 0.92),
@@ -502,6 +484,37 @@ Widget build(BuildContext context) {
                                 ],
                               ),
                             ),
+
+                          );
+                        },
+                      ),
+                    );
+                }
+              },
+            ),
+            ValueListenableBuilder<bool>(
+              valueListenable: _isLoginNotifier,
+              builder: (BuildContext context, bool loading, child) {
+                if (loading) {
+                  var data = MediaQuery.of(context);
+                  var bottomPadding = data.padding.top;
+                  bottomPadding += kToolbarHeight;
+                  return SizedBox.expand(
+                    child: ClipRect(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 21, 20, 20).withOpacity(0.2),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.only(bottom: bottomPadding),
+                            alignment: Alignment.center,
+                            child: TbProgressIndicator(
+                              tbContext,
+                              size: 50.0,
+                            ),
+
                           ),
                         );
                       },
