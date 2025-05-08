@@ -54,8 +54,6 @@ android {
         }
     }
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
 
     dependencies {
         implementation 'androidx.browser:browser:1.0.0'
