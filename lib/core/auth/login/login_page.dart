@@ -407,11 +407,13 @@ class _LoginPageState extends TbPageState<LoginPage>
                                       children: [
                                         TextButton(
                                           onPressed: () {
-                                            _forgotPassword();
+                                          _forgotPassword();
                                           },
                                           child: Text(
-                                            S.of(context).passwordForgotText,
-                                            style: TbTextStyles.bodyMedium,
+                                          S.of(context).passwordForgotText,
+                                          style: TbTextStyles.bodyMedium.copyWith(
+                                            color: const Color.fromRGBO(29, 233, 182, 0.92), 
+                                          ),
                                           ),
                                         ),
                                       ],
