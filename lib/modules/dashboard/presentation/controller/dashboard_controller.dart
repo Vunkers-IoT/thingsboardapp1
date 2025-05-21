@@ -99,6 +99,7 @@ class DashboardController {
         if (firstPart.endsWith('Groups')) {
           firstPart = firstPart.replaceFirst('Groups', 's');
         }
+
         if ((firstPart == 'dashboard' || firstPart == 'dashboards') &&
             parts.length > 1) {
           final dashboardId = parts[1];
@@ -123,6 +124,4 @@ class DashboardController {
     rightLayoutOpened.dispose();
     controller?.dispose();
   }
-
-  navigateToDashboard(String defaultDashboardId, {required bool animate}) {}
 }

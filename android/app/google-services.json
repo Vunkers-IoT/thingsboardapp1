@@ -6,9 +6,30 @@
   },
   "client": [
     {
-      "mobilesdk_app_id": "1:723748549577:android:802fbecf7c0a95bbd5ae18",
-      "android_client_info": {
-        "package_name": "org.thingsboard.pe.app"
+      "client_info": {
+        "mobilesdk_app_id": "1:723748549577:android:802fbecf7c0a95bbd5ae18",
+        "android_client_info": {
+          "package_name": "org.thingsboard.pe.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5qvuon2_ChshOuVHD1bI67ku2EKusP10"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723748549577:android:eafab6b90ec49c80d5ae18",
+        "android_client_info": {
+          "package_name": "org.vunkers.thingsboard.app"
+        }
       },
       "oauth_client": [],
       "api_key": [

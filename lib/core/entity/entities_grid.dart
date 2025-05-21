@@ -33,9 +33,7 @@ class _EntitiesGridState<T, P> extends BaseEntitiesState<T, P> {
         ...slivers,
         SliverPadding(
           padding: const EdgeInsets.all(16),
-          sliver: PagedSliverGrid<T, T>(
-            state: pagingController.value as PagingState<T, T>,
-            fetchNextPage: () => pagingController.fetchNextPage(),
+          sliver: PagedSliverGrid(
             showNewPageProgressIndicatorAsGridChild: false,
             showNewPageErrorIndicatorAsGridChild: false,
             showNoMoreItemsIndicatorAsGridChild: false,

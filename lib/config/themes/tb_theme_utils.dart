@@ -5,7 +5,7 @@ import 'package:thingsboard_app/utils/transition/page_transitions.dart';
 abstract class TbThemeUtils {
   static final _tbTypography = Typography.material2018();
 
-  static const Color _tbTextColor = Color(0xFFFAFAFA);
+  static const Color _tbTextColor = Color(0xFF282828);
 
   static final tbPrimary =
       _mergeColors(Colors.teal, {'500': Colors.teal[800]!.value});
@@ -27,7 +27,7 @@ abstract class TbThemeUtils {
       primaryTextTheme: _tbTypography.black,
       typography: _tbTypography,
       appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.white,
         foregroundColor: _tbTextColor,
         iconTheme: IconThemeData(color: _tbTextColor),
       ),

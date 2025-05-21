@@ -260,17 +260,26 @@ abstract class BaseEntitiesState<T, P>
 
   BaseEntitiesState();
 
- 
+  @override
+  void initState() {
+    super.initState();
+    pagingController =
+        PagingController(firstPageKey: widget.pageKeyController.value.pageKey);
+    widget.pageKeyController.addListener(_didChangePageKeyValue);
+    pagingController.addPageRequestListener((pageKey) {
+      _fetchPage(pageKey);
+    });
+  }
+
   @override
   void didUpdateWidget(BaseEntitiesWidget<T, P> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.pageKeyController != oldWidget.pageKeyController) {
       oldWidget.pageKeyController.removeListener(_didChangePageKeyValue);
       widget.pageKeyController.addListener(_didChangePageKeyValue);
-      _reloadData = true;
-      _refresh();
     }
   }
+
   @override
   void dispose() {
     widget.pageKeyController.removeListener(_didChangePageKeyValue);
@@ -302,41 +311,44 @@ abstract class BaseEntitiesState<T, P>
     }
   }
 
-Future<void> _fetchPage(P pageKey, {bool refresh = false}) async {
-  if (!mounted) return;
-
-  _dataLoading = true;
-  try {
-    hideNotification();
-    final pageData = await widget.fetchEntities(pageKey);
-    final isLastPage = !pageData.hasNext;
-
-    if (refresh) {
-      pagingController.refresh();
-    }
-
-    if (isLastPage) {
-      pagingController.appendLastPage(pageData.data);
-    } else {
-      final nextPageKey = widget.pageKeyController.nextPageKey(pageKey);
-      pagingController.appendPage(pageData.data, nextPageKey);
-    }
-  } catch (error) {
+  Future<void> _fetchPage(P pageKey, {bool refresh = false}) async {
     if (mounted) {
-      pagingController.error = error;
-    }
-  } finally {
-    _dataLoading = false;
-    if (refresh) {
-      _refreshCompleter?.complete();
-      _refreshCompleter = null;
-    }
-    if (_scheduleRefresh && mounted) {
-      _scheduleRefresh = false;
-      _refreshPagingController();
+      _dataLoading = true;
+      try {
+        hideNotification();
+        final pageData = await widget.fetchEntities(pageKey);
+        final isLastPage = !pageData.hasNext;
+        if (refresh) {
+          var state = pagingController.value;
+          if (state.itemList != null) {
+            state.itemList!.clear();
+          }
+        }
+        if (isLastPage) {
+          pagingController.appendLastPage(pageData.data);
+        } else {
+          final nextPageKey = widget.pageKeyController.nextPageKey(pageKey);
+          pagingController.appendPage(pageData.data, nextPageKey);
+        }
+      } catch (error) {
+        if (mounted) {
+          pagingController.error = error;
+        }
+      } finally {
+        _dataLoading = false;
+        if (refresh) {
+          _refreshCompleter!.complete();
+          _refreshCompleter = null;
+        }
+        if (_scheduleRefresh) {
+          _scheduleRefresh = false;
+          if (mounted) {
+            _refreshPagingController();
+          }
+        }
+      }
     }
   }
-}
 
   @override
   Widget build(BuildContext context) {

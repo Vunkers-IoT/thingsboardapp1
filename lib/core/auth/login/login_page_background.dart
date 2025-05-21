@@ -5,13 +5,11 @@ class LoginPageBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return SizedBox.expand(
       child: CustomPaint(
         painter:
-            _LoginPageBackgroundPainter(color: Color.fromRGBO(103, 58, 183, 1)),
+            _LoginPageBackgroundPainter(color: Theme.of(context).primaryColor),
       ),
-
     );
   }
 }
@@ -23,8 +21,7 @@ class _LoginPageBackgroundPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-
-    final paint = Paint()..color = color.withAlpha(100);
+    final paint = Paint()..color = color.withAlpha(14);
     paint.style = PaintingStyle.fill;
     var topPath = Path();
     topPath.moveTo(0, 0);

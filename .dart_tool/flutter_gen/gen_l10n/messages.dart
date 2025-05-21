@@ -7,7 +7,6 @@ import 'package:intl/intl.dart' as intl;
 
 import 'messages_ar.dart';
 import 'messages_en.dart';
-import 'messages_es.dart';
 import 'messages_zh.dart';
 
 // ignore_for_file: type=lint
@@ -95,7 +94,6 @@ abstract class S {
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
     Locale('ar'),
-    Locale('es'),
     Locale('zh'),
     Locale('zh', 'CN'),
     Locale('zh', 'TW')
@@ -542,7 +540,7 @@ abstract class S {
   /// No description provided for @tryAgain.
   ///
   /// In en, this message translates to:
-  /// **'Try Again'**
+  /// **'Try again'**
   String get tryAgain;
 
   /// No description provided for @verifyYourIdentity.
@@ -1126,6 +1124,114 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Update to {version}'**
   String updateTo(Object version);
+
+  /// No description provided for @popTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter PIN of {deviceName} to confirm proof of possession'**
+  String popTitle(Object deviceName);
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @confirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmation'**
+  String get confirmation;
+
+  /// No description provided for @bleHelpMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'To provision your new device, please make sure that your phone’s Bluetooth is turned on and within range of your new device'**
+  String get bleHelpMessage;
+
+  /// No description provided for @wifiPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Wi-Fi password'**
+  String get wifiPassword;
+
+  /// No description provided for @wifiHelpMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'To continue setup of your device {deviceName}, please provide your Network\'s credentials.'**
+  String wifiHelpMessage(Object deviceName);
+
+  /// No description provided for @wifiPasswordMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter password for {network}'**
+  String wifiPasswordMessage(Object network);
+
+  /// No description provided for @deviceNotFoundMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Devices not found. Please make sure that your phone’s Bluetooth is turned on and within range of your new device.'**
+  String get deviceNotFoundMessage;
+
+  /// No description provided for @permissionsNotEnoughMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You don\'t have enough permissions for \"{permissions}\" to proceed. Please grant the required permissions and tap \"Try Again\".'**
+  String permissionsNotEnoughMessage(Object permissions);
+
+  /// No description provided for @sendingWifiCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending Wi-Fi credentials'**
+  String get sendingWifiCredentials;
+
+  /// No description provided for @confirmingWifiConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirming Wi-Fi connection'**
+  String get confirmingWifiConnection;
+
+  /// No description provided for @provisionedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Device has been successfully provisioned'**
+  String get provisionedSuccessfully;
+
+  /// No description provided for @returnToDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Return to dashboard'**
+  String get returnToDashboard;
+
+  /// No description provided for @cannotEstablishSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot establish session with device {deviceName}. Please try again'**
+  String cannotEstablishSession(Object deviceName);
+
+  /// No description provided for @claimingDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Claiming device'**
+  String get claimingDevice;
+
+  /// No description provided for @claimingDeviceDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Device claiming done'**
+  String get claimingDeviceDone;
+
+  /// No description provided for @claimingMessageSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Device has been\nsuccessfully claimed'**
+  String get claimingMessageSuccess;
+
+  /// No description provided for @openAppSettingsToGrantPermissionMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You don\'t have enough permissions for \"{permissions}\" to proceed. Please open app settings, grant permissions and trap \"Try Again\".'**
+  String openAppSettingsToGrantPermissionMessage(Object permissions);
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {
@@ -1137,7 +1243,7 @@ class _SDelegate extends LocalizationsDelegate<S> {
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['ar', 'en', 'es', 'zh'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['ar', 'en', 'zh'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_SDelegate old) => false;
@@ -1160,7 +1266,6 @@ case 'TW': return SZhTw();
   switch (locale.languageCode) {
     case 'ar': return SAr();
     case 'en': return SEn();
-    case 'es': return SEs();
     case 'zh': return SZh();
   }
 
