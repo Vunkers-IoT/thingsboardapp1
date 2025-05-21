@@ -30,7 +30,6 @@ class _MorePageState extends TbContextState<MorePage> {
         firstName: tbContext.userDetails?.firstName ?? '',
         lastName: tbContext.userDetails?.lastName ?? '',
         email: tbContext.userDetails?.email ?? '',
-
       ),
     );
 
@@ -188,8 +187,11 @@ class _MorePageState extends TbContextState<MorePage> {
 
   @override
   void initState() {
-    NotificationService(widget.tbClient, widget.log, widget.tbContext)
-        .updateNotificationsCount();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      NotificationService(tbClient, widget.log, tbContext)
+          .updateNotificationsCount();
+    });
+
     super.initState();
   }
 }

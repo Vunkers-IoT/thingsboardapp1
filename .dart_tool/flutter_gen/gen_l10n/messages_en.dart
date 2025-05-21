@@ -228,7 +228,7 @@ class SEn extends S {
   String get listIsEmptyText => 'The list is currently empty.';
 
   @override
-  String get tryAgain => 'Try Again';
+  String get tryAgain => 'Try again';
 
   @override
   String get verifyYourIdentity => 'Verify your identity';
@@ -535,5 +535,71 @@ class SEn extends S {
   @override
   String updateTo(Object version) {
     return 'Update to $version';
+  }
+
+  @override
+  String popTitle(Object deviceName) {
+    return 'Enter PIN of $deviceName to confirm proof of possession';
+  }
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get confirmation => 'Confirmation';
+
+  @override
+  String get bleHelpMessage => 'To provision your new device, please make sure that your phone’s Bluetooth is turned on and within range of your new device';
+
+  @override
+  String get wifiPassword => 'Wi-Fi password';
+
+  @override
+  String wifiHelpMessage(Object deviceName) {
+    return 'To continue setup of your device $deviceName, please provide your Network\'s credentials.';
+  }
+
+  @override
+  String wifiPasswordMessage(Object network) {
+    return 'Enter password for $network';
+  }
+
+  @override
+  String get deviceNotFoundMessage => 'Devices not found. Please make sure that your phone’s Bluetooth is turned on and within range of your new device.';
+
+  @override
+  String permissionsNotEnoughMessage(Object permissions) {
+    return 'You don\'t have enough permissions for \"$permissions\" to proceed. Please grant the required permissions and tap \"Try Again\".';
+  }
+
+  @override
+  String get sendingWifiCredentials => 'Sending Wi-Fi credentials';
+
+  @override
+  String get confirmingWifiConnection => 'Confirming Wi-Fi connection';
+
+  @override
+  String get provisionedSuccessfully => 'Device has been successfully provisioned';
+
+  @override
+  String get returnToDashboard => 'Return to dashboard';
+
+  @override
+  String cannotEstablishSession(Object deviceName) {
+    return 'Cannot establish session with device $deviceName. Please try again';
+  }
+
+  @override
+  String get claimingDevice => 'Claiming device';
+
+  @override
+  String get claimingDeviceDone => 'Device claiming done';
+
+  @override
+  String get claimingMessageSuccess => 'Device has been\nsuccessfully claimed';
+
+  @override
+  String openAppSettingsToGrantPermissionMessage(Object permissions) {
+    return 'You don\'t have enough permissions for \"$permissions\" to proceed. Please open app settings, grant permissions and trap \"Try Again\".';
   }
 }

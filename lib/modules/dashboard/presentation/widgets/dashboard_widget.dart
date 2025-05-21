@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:thingsboard_app/constants/enviroment_variables.dart';
 import 'package:thingsboard_app/core/context/tb_context_widget.dart';
-import 'package:thingsboard_app/core/logger/tb_logger.dart';
 import 'package:thingsboard_app/locator.dart';
 import 'package:thingsboard_app/modules/dashboard/presentation/controller/dashboard_controller.dart';
 import 'package:thingsboard_app/modules/dashboard/presentation/controller/dashboard_page_controller.dart';
@@ -37,11 +37,10 @@ class _DashboardState extends TbContextState<DashboardWidget> {
   final dashboardLoading = ValueNotifier<bool>(true);
 
   late final DashboardController dashboardController;
-  late final TbLogger log;
   late WebUri _initialUrl;
 
   final settings = InAppWebViewSettings(
-    isInspectable: kDebugMode,
+    isInspectable: kDebugMode || EnvironmentVariables.verbose,
     useShouldOverrideUrlLoading: true,
     mediaPlaybackRequiresUserGesture: false,
     javaScriptEnabled: true,
@@ -53,8 +52,6 @@ class _DashboardState extends TbContextState<DashboardWidget> {
     allowsInlineMediaPlayback: true,
     allowsBackForwardNavigationGestures: false,
   );
-  
-  get getHomeDashboard => getHomeDashboard;
 
   @override
   Widget build(BuildContext context) {
@@ -229,6 +226,16 @@ class _DashboardState extends TbContextState<DashboardWidget> {
               webViewLoading = false;
             }
           },
+          onReceivedHttpError: (ctrl, req, errResponse) {
+            log.debug(
+              'onReceivedHttpError request: $req, response: $errResponse',
+            );
+
+            if (dashboardLoading.value &&
+                req.url.path.contains('/dashboard/')) {
+              dashboardLoading.value = false;
+            }
+          },
           onPermissionRequest: (controller, request) async {
             log.debug(
               'onPermissionRequest resources: ${request.resources}',
@@ -276,18 +283,30 @@ class _DashboardState extends TbContextState<DashboardWidget> {
     );
 
     dashboardController = DashboardController(widget.tbContext);
-    log = widget.tbContext.log;
-;
+  }
+
+  @override
+  void dispose() {
+    dashboardLoading.dispose();
+    dashboardController.dispose();
+    super.dispose();
   }
 
   SnackBar _buildWarnSnackBar(String message) {
     return SnackBar(
+      duration: const Duration(seconds: 10),
+      backgroundColor: const Color(0xFFdc6d1b),
       content: Text(
         message,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
       ),
-      backgroundColor: Colors.orange,
-      duration: Duration(seconds: 3),
+      action: SnackBarAction(
+        label: 'Close',
+        textColor: Colors.white,
+        onPressed: () {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        },
+      ),
     );
   }
 }

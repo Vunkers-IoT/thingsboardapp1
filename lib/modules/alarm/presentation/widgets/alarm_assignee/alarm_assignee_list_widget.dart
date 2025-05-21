@@ -86,7 +86,6 @@ class _AssigneeListWidgetState extends State<AlarmAssigneeListWidget> {
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
-                  focusColor: Colors.red,
                   hintStyle: TbTextStyles.bodyLarge.copyWith(
                     color: Colors.black.withOpacity(.38),
                   ),
@@ -126,7 +125,7 @@ class _AssigneeListWidgetState extends State<AlarmAssigneeListWidget> {
             ),
             Expanded(
               child: PagedListView<UsersAssignQuery, AssigneeEntity>.separated(
-                controller:
+                pagingController:
                     getIt<AlarmAssigneePaginationRepository>().pagingController,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

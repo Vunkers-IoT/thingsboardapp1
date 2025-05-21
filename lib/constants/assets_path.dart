@@ -1,8 +1,8 @@
 abstract class ThingsboardImage {
   static const thingsBoardWithTitle =
-      'assets/images/thingsboard_with_title.svg';
+      'assets/images/vunkers_logo retallat_250.png';
   static const thingsBoardEUWithTitle =
-      'assets/images/logo_title_white_EU_cloud.svg';
+      'assets/images/vunkers_logo retallat_250.png';
   static const thingsboard = 'assets/images/thingsboard.svg';
   static const thingsboardOuter = 'assets/images/thingsboard_outer.svg';
   static const thingsboardCenter = 'assets/images/thingsboard_center.svg';
@@ -15,6 +15,15 @@ abstract class ThingsboardImage {
       'assets/images/dashboard_permission_error.svg';
   static const noDataImage = 'assets/images/no-data.svg';
   static const thingsboardBigLogo = 'assets/images/thingsboard_big_logo.svg';
+  static const deviceProvisioning = 'assets/images/provisioning.svg';
+  static const deviceProvisioningDone = 'assets/images/provisioning-done.svg';
+  static const deviceProvisioningError =
+      'assets/images/device-not-connected.svg';
+  static const deviceNotFound = 'assets/images/device_not_found.svg';
+  static const provisioningError = 'assets/images/provisioning_error.svg';
+  static const connectMobile = 'assets/images/connect_mobile.svg';
+  static const mobileConnectionError =
+      'assets/images/mobile-connection-error.svg';
 
   static final oauth2Logos = <String, String>{
     'google-logo': 'assets/images/google-logo.svg',

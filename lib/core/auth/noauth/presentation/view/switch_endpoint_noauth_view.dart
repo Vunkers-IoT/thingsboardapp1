@@ -9,13 +9,12 @@ import 'package:thingsboard_app/core/context/tb_context_widget.dart';
 import 'package:thingsboard_app/locator.dart';
 
 class SwitchEndpointNoAuthView extends TbPageWidget {
-  SwitchEndpointNoAuthView({super.key, 
+  SwitchEndpointNoAuthView({
     required this.tbContext,
     required this.arguments,
   }) : super(tbContext);
 
   final Map<String, dynamic>? arguments;
-  @override
   final TbContext tbContext;
 
   @override
@@ -54,7 +53,7 @@ class _SwitchEndpointNoAuthViewState
                 if (tbClient.isPreVerificationToken()) {
                   navigateTo('/login/mfa', replace: true, clearStack: true);
                 } else {
-                  navigateTo('/main', replace: true, clearStack: true);
+                  tbContext.updateRouteState();
                 }
               }
             },
@@ -102,24 +101,29 @@ class _SwitchEndpointNoAuthViewState
                   );
 
                 case NoAuthErrorState():
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.error,
-                          color: Colors.red,
-                          size: 50,
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'Something went wrong ... Rollback',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge
-                              ?.copyWith(fontWeight: FontWeight.w500),
-                        ),
-                      ],
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.error,
+                            color: Colors.red,
+                            size: 50,
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            state.message ??
+                                'Something went wrong ... Rollback',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
                     ),
                   );
 

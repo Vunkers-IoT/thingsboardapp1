@@ -437,7 +437,7 @@ class _TwoFactorAuthenticationPageState
         errorText: S.of(context).verificationCodeInvalid,
       ),
       FormBuilderValidators.match(
-        RegExp(pattern),
+        pattern,
         errorText: S.of(context).verificationCodeInvalid,
       ),
     ];
