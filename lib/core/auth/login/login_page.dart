@@ -88,7 +88,7 @@ class _LoginPageState extends TbPageState<LoginPage>
                   case AuthLoadingState():
                     return SizedBox.expand(
                       child: Container(
-                        color: const Color(0x99FFFFFF),
+                        color: const Color.fromARGB(153, 255, 255, 255),
                         child: Center(
                           child: TbProgressIndicator(tbContext, size: 50.0),
                         ),
@@ -117,9 +117,9 @@ class _LoginPageState extends TbPageState<LoginPage>
                                                 null
                                             ? SizedBox(
                                                 height: 29,
-                                                width: 133,
-                                                child: tbContext
-                                                    .wlService.loginLogoImage!,
+                                                width: 140,
+                                                child: Image.asset(
+                                                     'assets/images/vunkers_logo retallat_250.png')
                                               )
                                             : const SizedBox(height: 25),
                                         Visibility(
@@ -419,9 +419,10 @@ class _LoginPageState extends TbPageState<LoginPage>
                                     const Spacer(),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 16,
-                                        ),
+                                          padding: const EdgeInsets.symmetric(
+                                        vertical: 16,
+                                      ),
+                                      backgroundColor: const Color.fromRGBO(29, 233, 182, 0.92),
                                       ),
                                       onPressed: () {
                                         _login();
